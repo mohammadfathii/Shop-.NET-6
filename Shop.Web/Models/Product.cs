@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shop.Web.Models
 {
@@ -11,7 +12,10 @@ namespace Shop.Web.Models
         public string Thumbnail { get; set; }
         public decimal Price { get; set; }
         public int QuantityInStock { get; set; } = 0;
+        public int DiscountId { get; set; }
 
+        [ForeignKey("DiscountId")]
+        public Discount Discount { get; set; }
         public ICollection<Category> Categories { get; set; }
     }
 }

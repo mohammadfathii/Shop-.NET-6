@@ -12,8 +12,8 @@ using Shop.Web.Data;
 namespace Shop.Web.Migrations
 {
     [DbContext(typeof(ShopDBContext))]
-    [Migration("20230617135213_AddFieldIsFinallyToChatModel")]
-    partial class AddFieldIsFinallyToChatModel
+    [Migration("20230617154125_InitlizeAllTables")]
+    partial class InitlizeAllTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -181,8 +181,6 @@ namespace Shop.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("Discounts");
                 });
 
@@ -272,6 +270,9 @@ namespace Shop.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DiscountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -287,6 +288,9 @@ namespace Shop.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DiscountId")
+                        .IsUnique();
 
                     b.ToTable("Products");
                 });
@@ -404,8 +408,15 @@ namespace Shop.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IPAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastLoginTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -487,17 +498,6 @@ namespace Shop.Web.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Shop.Web.Models.Discount", b =>
-                {
-                    b.HasOne("Shop.Web.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Shop.Web.Models.Message", b =>
                 {
                     b.HasOne("Shop.Web.Models.Chat", "Chat")
@@ -543,6 +543,17 @@ namespace Shop.Web.Migrations
                     b.Navigation("Orderr");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Shop.Web.Models.Product", b =>
+                {
+                    b.HasOne("Shop.Web.Models.Discount", "Discount")
+                        .WithOne("Product")
+                        .HasForeignKey("Shop.Web.Models.Product", "DiscountId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Discount");
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Report", b =>
@@ -594,6 +605,12 @@ namespace Shop.Web.Migrations
             modelBuilder.Entity("Shop.Web.Models.Comment", b =>
                 {
                     b.Navigation("SubComments");
+                });
+
+            modelBuilder.Entity("Shop.Web.Models.Discount", b =>
+                {
+                    b.Navigation("Product")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Order", b =>

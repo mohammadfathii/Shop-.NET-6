@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Shop.Web.Data;
-using Shop.Web.Data.Repository;
-using Shop.Web.Data.Repository.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +16,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     option.LogoutPath = "/Auth/Logout";
     option.ExpireTimeSpan = TimeSpan.FromDays(30);
 });
-
-builder.Services.AddScoped<IUserRepository,UserRepository>();
-builder.Services.AddScoped<IProductRepository,ProductRepository>();
-builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
-
 
 var app = builder.Build();
 

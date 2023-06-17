@@ -30,6 +30,15 @@ namespace Shop.Web.Data
             .HasOne(s => s.User)
             .WithMany(u => u.Comments)
             .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Product>()
+            .HasOne(s => s.Discount)
+            .WithOne(u => u.Product)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Discount>()
+            .HasOne(s => s.Product)
+            .WithOne(u => u.Discount)
+            .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }
