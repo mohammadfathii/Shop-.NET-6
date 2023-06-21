@@ -49,8 +49,17 @@
                             <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
                         </li>
                     }
+                    @if(User.HasClaim("IsAdmin","True")){
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a>
+                        </li>
+                    }
                 </ul>
                 <div class="d-flex">
+                    <a asp-controller="User" asp-action="Index">
+                        <img src="~/@(User.HasClaim("Avatar","user") ? "UserImage.png" : "Uploads/Avatars/" + User.FindFirst("Avatar").Value)" class="rounded-circle" style="width: 40px;"
+                             alt="Avatar" /> 
+                    </a>&nbsp; &nbsp; &nbsp; &nbsp;
                     <a asp-controller="User" asp-action="CheckOutPage" class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
@@ -60,13 +69,13 @@
         </div>
     </nav>
     <!-- Header-->
-    <header class="bg-dark py-5">
+    <header class="bg-danger py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Shop in style</h1>
                 <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
                 @if(User.Identity.IsAuthenticated){
-                    <p>User : @User.FindFirst("Email") is logged in to system !</p>
+                    <p>User : @User.FindFirst("Email").Value is logged in to system !</p>
                 }
             </div>
         </div>
@@ -86,7 +95,7 @@
     </div>
 
     <!-- Footer-->
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-danger">
         <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
     </footer>
 

@@ -110,6 +110,9 @@ namespace Shop.Web.Controllers
                         new Claim("Id",user.Id.ToString()),
                         new Claim("isAdmin",user.IsAdmin.ToString(),ClaimValueTypes.Boolean),
                         new Claim("Email",user.Email.ToString()),
+                        new Claim("UserName",user.UserName.ToString(),ClaimValueTypes.String),
+                        new Claim("FullName",user.FullName.ToString(),ClaimValueTypes.String),
+                        new Claim("Avatar",user.Avatar.ToString()),
                     };
                     var identityClaims = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principalClaims = new ClaimsPrincipal(identityClaims);
