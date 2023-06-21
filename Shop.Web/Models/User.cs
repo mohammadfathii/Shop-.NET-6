@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 
 namespace Shop.Web.Models
 {
@@ -20,7 +21,7 @@ namespace Shop.Web.Models
         public string Address { get; set; }
         public string Address2 { get; set; }
         [DataType(DataType.PhoneNumber)]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string IPAddress { get; set; }
         public DateTime LastLoginTime { get; set; }
 

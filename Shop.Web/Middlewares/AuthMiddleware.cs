@@ -16,7 +16,24 @@ namespace Shop.Web.Middlewares
 
         public Task Invoke(HttpContext httpContext)
         {
-
+            if (httpContext.Request.Path.StartsWithSegments("/admin"))
+            {
+                if (!httpContext.User.Identity.IsAuthenticated)
+                {
+                    httpContext.Response.Redirect("/Auth/Login");
+                }else if(httpContext.User.HasClaim("IsAdmin","False") == false)
+                {
+                    httpContext.Response.Redirect("/Home");
+                }
+            }
+            else if (httpContext.Request.Path.StartsWithSegments("/user"))
+            {
+                if (!httpContext.User.Identity.IsAuthenticated)
+                {
+                    httpContext.Response.Redirect("/Auth/Login");
+                }
+            }
+            
             return _next(httpContext);
         }
     }

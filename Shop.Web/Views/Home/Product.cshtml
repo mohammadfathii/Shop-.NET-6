@@ -1,0 +1,33 @@
+﻿@model Product
+
+<div class="row">
+    <div class="col-md-12">
+        <img src="~/Uploads/Images/Products/@Model.Thumbnail" width="100%" height="auto" />
+        <br /><hr />
+        <h1>@Model.Name</h1>
+        <p>@Model.Description</p>
+        <p class="text-muted">@Model.Category.Name</p>
+        <p class="@(Model.QuantityInStock == 0 ? "text-danger" : "text-success")">
+            Quantity in Stock : @Model.QuantityInStock
+        </p>
+        <br />
+        @if (Model.Discount != null)
+        {
+            <h2 class="text-success"><span class="text-danger text-decoration-line-through">@Model.Price</span> @(Model.Price * Model.Discount.DiscountPercent / 100)</h2>
+        }else
+        {
+            <h2 class="text-success">@Model.Price</h2>
+        }
+        @if (Model.QuantityInStock > 0)
+        {
+            <a asp-controller="User" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-block btn-primary">Add To Cart</a>
+        }else
+        {
+            <a class="btn btn-block btn-primary disabled">Add To Card (Out of Stock)</a>
+        }
+        <br /><br />
+        <form asp-controller="User" asp-action="SendComment" method="post">
+
+        </form>
+    </div>
+</div>

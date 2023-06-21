@@ -13,9 +13,11 @@ namespace Shop.Web.Models
         public decimal Price { get; set; }
         public int QuantityInStock { get; set; } = 0;
         public int DiscountId { get; set; }
+        public int CategoryId { get; set; }
 
         [ForeignKey("DiscountId")]
         public Discount Discount { get; set; }
-        public ICollection<Category> Categories { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
     }
 }

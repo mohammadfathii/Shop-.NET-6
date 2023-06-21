@@ -1,0 +1,17 @@
+﻿@model Category
+
+<h1>@Model.Name</h1>
+<p>@Model.Description</p>
+<hr />
+<div class="row">
+    @if (Model.Products.Count > 0)
+    {
+        @foreach (var product in Model.Products)
+        {
+            <partial name="_ShowProduct" model="product" />
+        }
+    }else
+    {
+        <h2 class="text-danger">there is nothing in this Category !</h2>
+    }
+</div>

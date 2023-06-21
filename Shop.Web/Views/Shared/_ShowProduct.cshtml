@@ -1,0 +1,37 @@
+﻿@model Product
+
+<div class="col mb-5">
+    <div class="card h-100">
+        <!-- Sale badge-->
+        @if (Model.QuantityInStock > 0)
+        {
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+        }
+        <!-- Product image-->
+        <img class="card-img-top" src="~/Uploads/Images/Products/@Model.Thumbnail" alt="@Model.Name" />
+        <!-- Product details-->
+        <div class="card-body p-4">
+            <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder">@Model.Name</h5>
+                <!-- Product price-->
+                @if (Model.Discount.DiscountPercent > 0)
+                {
+                    <span class="text-muted text-decoration-line-through">@Model.Price</span>
+                    @(Model.Price * Model.Discount.DiscountPercent / 100 )
+                }
+                else{
+                    <span class="text-muted">@Model.Price</span>
+                }
+            </div>
+        </div>
+        <!-- Product actions-->
+        <div>
+            <span class="text-muted"><a asp-controller="Home" asp-action="Category" asp-route-id="@Model.Category.Id">@Model.Category.Name</a></span>
+
+        </div>
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a asp-controller="User" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+        </div>
+    </div>
+</div>

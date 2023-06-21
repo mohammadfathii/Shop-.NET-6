@@ -1,0 +1,13 @@
+﻿@model User
+@{
+    Layout = "_AuthLayout";
+    ViewData["Title"] = "Register Successfully Compeleted ";
+}
+
+
+<div class="alert alert-success">
+    <h1 class="alert-heading">Register Successfully Compeleted !</h1>
+    <p class="text-danger">*Please Check Your Email And Verify Your Account Before going to Login ! : '@Model.Email' *</p><br /><hr />
+    <a asp-controller="Auth" asp-action="Login" class="btn d-block btn-outline-success">Go to Login Page !</a>
+</div>
+

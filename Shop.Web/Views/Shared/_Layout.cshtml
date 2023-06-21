@@ -1,11 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Shop Homepage - @ViewData["Title"]</title>
+    <title>Shop - @ViewData["Title"]</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -21,8 +24,15 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Home" asp-action="Index" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -49,12 +59,23 @@
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Shop in style</h1>
                 <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                @if(User.Identity.IsAuthenticated){
+                    <p>User : @User.FindFirst("Email") is logged in to system !</p>
+                }
             </div>
         </div>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
+        <main role="main" class="pb-2">
+            <div class="row p-4">
+                <div class="col-md-8">
+                    @RenderBody()
+                </div>
+                <div class="col-md-4">
+                    <h1>ADS:</h1>
+                    @await Component.InvokeAsync("ADSComponent")
+                </div>
+            </div>
         </main>
     </div>
 

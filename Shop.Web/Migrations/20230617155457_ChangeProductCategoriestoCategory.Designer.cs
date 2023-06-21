@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop.Web.Data;
 
@@ -11,9 +12,11 @@ using Shop.Web.Data;
 namespace Shop.Web.Migrations
 {
     [DbContext(typeof(ShopDBContext))]
-    partial class ShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230617155457_ChangeProductCategoriestoCategory")]
+    partial class ChangeProductCategoriestoCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,6 +54,10 @@ namespace Shop.Web.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ExpireTime")
                         .HasColumnType("datetime2");
 
@@ -59,10 +66,6 @@ namespace Shop.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("URL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -409,9 +412,8 @@ namespace Shop.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .IsRequired()
