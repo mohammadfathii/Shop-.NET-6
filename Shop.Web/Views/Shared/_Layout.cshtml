@@ -27,12 +27,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" asp-controller="Home" asp-action="Index" aria-current="page">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -42,12 +36,24 @@
                             <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
                         </ul>
                     </li>
+                    @if(User.Identity.IsAuthenticated){
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" asp-controller="Auth" asp-action="Logout">Logout</a>
+                        </li>
+                    }else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
+                        </li>
+                    }
                 </ul>
                 <div class="d-flex">
                     <a asp-controller="User" asp-action="CheckOutPage" class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                     </a>
                 </div>
             </div>

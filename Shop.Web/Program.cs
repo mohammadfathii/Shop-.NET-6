@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Shop.Web.Data;
+using Shop.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 {
     option.LoginPath = "/Auth/Login";
     option.LogoutPath = "/Auth/Logout";
-    option.ExpireTimeSpan = TimeSpan.FromDays(30);
+    option.ExpireTimeSpan = TimeSpan.FromHours(2);
 });
 
 var app = builder.Build();
@@ -34,12 +35,17 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseAuthMiddleware();
 
-app.MapControllerRoute(
-    name : "areas",
-    pattern : "{area:exists}/{controller=Home}/{action=Index}/{Id?}");
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{Id?}");
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
 app.Run();

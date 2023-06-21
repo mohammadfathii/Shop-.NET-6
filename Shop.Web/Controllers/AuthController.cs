@@ -7,6 +7,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shop.Web.Controllers
 {
@@ -89,45 +90,50 @@ namespace Shop.Web.Controllers
         {
             return View();
         }
+
         [HttpPost("/Auth/Login")]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public IActionResult Login(LoginViewModel login)
         {
-            login.Email = login.Email.ToLower();
             if (!ModelState.IsValid)
             {
-                return View(login);
+                return View(User);
             }
-
-            var user = Context.Users.FirstOrDefault(u => u.Email == login.Email && u.Password == login.Password);
-
-            if (user == null)
+            var user = Context.Users.FirstOrDefault(u => u.Email == login.Email.ToLower() && u.Password == login.Password);
+            if (user != null)
             {
-                ModelState.AddModelError("Email","User Was Not Found !");
-                ModelState.AddModelError("Password","User Was Not Found !");
-                return View(login);
+                if (user.VerifyToken == "")
+                {
+                    var Claims = new List<Claim>() {
+                        new Claim(ClaimTypes.Name,user.UserName,ClaimValueTypes.String),
+                        new Claim("Id",user.Id.ToString()),
+                        new Claim("isAdmin",user.IsAdmin.ToString(),ClaimValueTypes.Boolean),
+                        new Claim("Email",user.Email.ToString()),
+                    };
+                    var identityClaims = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principalClaims = new ClaimsPrincipal(identityClaims);
+                    var properties = new AuthenticationProperties()
+                    {
+                        IsPersistent = login.RememberMe,
+                    };
+
+                    HttpContext.SignInAsync(principalClaims, properties);
+                    return Redirect("/Home/Index");
+                }
+                ModelState.AddModelError("Email", "Please Verify Your Account First (Check Your Email)");
+                return View();
             }
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-                new Claim("IsAdmin",user.IsAdmin.ToString()),
-                new Claim("Avatar",user.Avatar.ToString()),
-                new Claim("Email",user.Email.ToString()),
-            };
-
-            var identity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-            var properties = new AuthenticationProperties() { IsPersistent = login.RememberMe };
-            HttpContext.SignInAsync(principal, properties);
-
-            return RedirectToRoute("/User/Home/Index");
+            ModelState.AddModelError("Email", "Field is Incorrect");
+            ModelState.AddModelError("Password", "Field is Incorrect");
+            return View();
         }
 
-        [Authorize]
+        [HttpGet]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToRoute("/Home/Index");
+            return Redirect("/Auth/Login");
         }
 
     }

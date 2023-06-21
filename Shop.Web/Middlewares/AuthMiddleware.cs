@@ -21,7 +21,7 @@ namespace Shop.Web.Middlewares
                 if (!httpContext.User.Identity.IsAuthenticated)
                 {
                     httpContext.Response.Redirect("/Auth/Login");
-                }else if(httpContext.User.HasClaim("IsAdmin","False") == false)
+                }else if(httpContext.User.HasClaim("IsAdmin","False"))
                 {
                     httpContext.Response.Redirect("/Home");
                 }

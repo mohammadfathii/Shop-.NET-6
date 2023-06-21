@@ -15,22 +15,21 @@
         <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
 
         <div class="form-outline form-white mb-4">
-            <input asp-for="Email" class="form-control form-control-lg" />
-            <label class="form-label" asp-for="Email"></label>
-            <span class="text-danger" asp-validation-for="Email"></span>
+            <input asp-for="@Model.Email" class="form-control form-control-lg" />
+            <label class="form-label" asp-for="@Model.Email"></label>
+            <span class="text-danger" asp-validation-for="@Model.Email"></span>
         </div>
 
         <div class="form-outline form-white mb-4">
-            <input asp-for="Password" class="form-control form-control-lg" />
-            <label class="form-label" asp-for="Password"></label>
-            <span class="text-danger" asp-validation-for="Password"></span>
+            <input asp-for="@Model.Password" class="form-control form-control-lg" />
+            <label class="form-label" asp-for="@Model.Password"></label>
+            <span class="text-danger" asp-validation-for="@Model.Password"></span>
         </div>
 
         <div class="form-outline form-white mb-4">
             <label class="form-label" asp-for="RememberMe"></label>
             <input asp-for="RememberMe" />
         </div>
-
 
         <input class="btn btn-outline-light btn-lg px-5" value="Login" type="submit" />
 
