@@ -42,28 +42,26 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand bg-dark navbar-light border-bottom">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a asp-controller="Admin" asp-action="Index" class="nav-link">خانه</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a asp-controller="Home" asp-action="Index" class="nav-link">صفحه اصلی سایت</a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand bg-dark navbar-light border-bottom">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-action="Index" class="nav-link">خانه</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">صفحه اصلی سایت</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a asp-controller="Admin" asp-action="Index" class="brand-link">
+    <a asp-action="Index" class="brand-link">
                 <img src="~/plugins/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">پنل مدیریت</span>
@@ -88,7 +86,7 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item has-treeview menu-open">
-              <a href="#" class="nav-link active">
+              <a asp-action="Index" class="nav-link active">
                 <i class="nav-icon fa fa-dashboard"></i>
                 <p>
                   داشبوردها
@@ -97,7 +95,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="#" class="nav-link active">
+                  <a asp-action="Index" class="nav-link active">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>داشبورد</p>
                   </a>
@@ -123,27 +121,36 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="pages/forms/general.html" class="nav-link">
+                  <a asp-controller="Product" asp-action="Create" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>اجزا عمومی</p>
+                    <p>ساخت محصول جدید</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/forms/advanced.html" class="nav-link">
+                  <a asp-controller="Category" asp-action="Create" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>پیشرفته</p>
+                    <p>ساخت دسته بندی جدید</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/forms/editors.html" class="nav-link">
+                <a asp-controller="Discount" asp-action="Create" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>ویشرایشگر</p>
+                    <p>ساخت تخفیف جدید</p>
                   </a>
                 </li>
               </ul>
             </li>
+            <li class="nav-header">صفحات</li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+                <a asp-controller="Product" class="nav-link">
+                    <i class="nav-icon fa fa-file"></i>
+                    <p>محصولات</p>
+                </a>
+            </li>
+            <li class="nav-header">اقدامات</li>
+
+            <li class="nav-item">
+              <a asp-area="" asp-controller="Auth" asp-action="Logout" class="nav-link">
                 <i class="nav-icon fa fa-circle-o text-danger"></i>
                 <p>خروج</p>
               </a>
@@ -173,7 +180,7 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="~/plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -181,7 +188,7 @@
         $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="~/plugins/morris/morris.min.js"></script>
@@ -209,6 +216,8 @@
     <script src="~/plugins/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/plugins/dist/js/demo.js"></script>
+
+    @await RenderSectionAsync("Scripts",required: false);
 </body>
 </html>
 

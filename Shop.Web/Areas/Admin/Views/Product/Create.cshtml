@@ -1,0 +1,110 @@
+﻿<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title text-center">اضافه کردن محصول</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                نام محصول
+                            </label>
+                            <input class="form-control form-control-lg" type="text" placeholder="نام محصول">
+                            <div class="form-group">
+                                <label>معمولی</label>
+                                <select class="form-control select2" style="width: 100%;">
+                                    <option selected="selected">مازندران</option>
+                                    <option>شیراز</option>
+                                    <option>گلستان</option>
+                                    <option>اردبیل</option>
+                                    <option>خوزستان</option>
+                                    <option>سیستان و بلوچستان</option>
+                                    <option>مشهد</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            test
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Description *@
+        <div class="col-md-12">
+            <div class="card card-info card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        توضیحات محصول
+                    </h3>
+                    <!-- tools box -->
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool btn-sm"
+                                data-widget="collapse"
+                                data-toggle="tooltip"
+                                title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /. tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="mb-3">
+                        <textarea id="editor1" name="editor1" style="width: 100%">توضیحات محصول را وارد کنید</textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        
+    </div>
+
+</section>
+
+@section Scripts{
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/dist/js/demo.js"></script>
+    <!-- CK Editor -->
+    <script src="~/plugins/ckeditor/ckeditor.js"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script>
+        $(function () {
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            ClassicEditor
+                .create(document.querySelector('#editor1'))
+                .then(function (editor) {
+                    // The editor instance
+                })
+                .catch(function (error) {
+                    console.error(error)
+                })
+
+            // bootstrap WYSIHTML5 - text editor
+
+            $('.textarea').wysihtml5({
+                toolbar: { fa: true }
+            })
+        })
+    </script>
+}

@@ -56,10 +56,13 @@
                     }
                 </ul>
                 <div class="d-flex">
-                    <a asp-controller="User" asp-action="Index">
-                        <img src="~/@(User.HasClaim("Avatar","user") ? "UserImage.png" : "Uploads/Avatars/" + User.FindFirst("Avatar").Value)" class="rounded-circle" style="width: 40px;"
-                             alt="Avatar" /> 
-                    </a>&nbsp; &nbsp; &nbsp; &nbsp;
+                    @if(User.Identity.IsAuthenticated){
+                        <a asp-controller="User" asp-action="Index">
+                            <img src="~/@(User.HasClaim("Avatar","user") ? "UserImage.png" : "Uploads/Avatars/" + User.FindFirst("Avatar").Value)" class="rounded-circle" style="width: 40px;"
+                                 alt="Avatar" />
+                        </a>
+                    }
+                    &nbsp; &nbsp; &nbsp; &nbsp;
                     <a asp-controller="User" asp-action="CheckOutPage" class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
