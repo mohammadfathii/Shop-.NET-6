@@ -12,10 +12,12 @@ namespace Shop.Web.Areas.Admin.Controllers
     {
         public ShopDBContext Context { get; set; }
         public IServerSideService ServerSideService { get; set; }
+        public List<Category> Categories { get; set; }
         public ProductController(ShopDBContext context,IServerSideService serverSideService)
         {
             Context = context;
             ServerSideService = serverSideService;
+            Categories = Context.Categories.ToList();
         }
         public IActionResult Index()
         {
@@ -25,10 +27,9 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         [HttpGet]
         public IActionResult Create() {
-            var categories = Context.Categories.ToList();
             return View(new CreateUpdateProductViewModel()
             {
-                Categories = categories
+                Categories = Categories
             });
         }
 
@@ -36,6 +37,7 @@ namespace Shop.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateUpdateProductViewModel product)
         {
+            product.Categories = Categories;
             if (!ModelState.IsValid)
             {
                 return View(product);
@@ -56,8 +58,9 @@ namespace Shop.Web.Areas.Admin.Controllers
                 Name = product.Name,
                 Price = product.Price,
                 Description = product.Description,
-                CategoryId = product.CategoryId,
+                CategoryId = int.Parse(product.CategoryId.ToString()),
                 Thumbnail = thumbnail,
+                QuantityInStock = product.QuantityInStock,
             };
             Context.Products.Add(Product);
 

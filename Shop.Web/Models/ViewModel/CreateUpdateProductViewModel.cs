@@ -15,11 +15,14 @@ namespace Shop.Web.Models.ViewModel
         public int CategoryId { get; set; }
         [Required]
         public decimal Price { get; set; } = 100000;
+        [Required]
+        [MinLength(1)]
+        public int QuantityInStock { get; set; }
         [AllowNull]
         [Range(0,99)]
         public int DiscountPercent { get; set; }
         [AllowNull]
-        [Range(1,9999999)]
+        [Range(0,9999999)]
         public int DiscountCount { get; set; }
         [Required]
         public IFormFile Thumbnail { get; set; }

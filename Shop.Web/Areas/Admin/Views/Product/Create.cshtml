@@ -29,6 +29,7 @@
                             <div class="form-group">
                                 <label>دسته بندی محصول<span class="text-danger">*</span></label>
                                 <select asp-for="CategoryId" class="form-control select2" style="width: 100%;">
+                                    <option selected="selected">---Select Category---</option>
                                     @foreach (var category in Model.Categories)
                                     {
                                         <option value="@category.Id">@category.Name</option>
@@ -37,7 +38,7 @@
                                 <span class="text-danger" asp-validation-for="CategoryId"></span>
                             </div>
                             <div class="form-group">
-                                <label>درصد تخفیف محصول - <span class="text-danger">اختیاری</span></label>
+                                <label>درصد تخفیف محصول - <span class="text-success">اختیاری</span></label>
                                 <input asp-for="DiscountPercent" type="number" class="form-control" />
                                 <span class="text-danger" asp-validation-for="DiscountPercent"></span>
                             </div>
@@ -58,6 +59,11 @@
                                 <label> قیمت محصول به ریال<span class="text-danger">*</span></label>
                                 <input asp-for="Price" type="number" class="form-control"/>
                                 <span class="text-danger" asp-validation-for="Price"></span>
+                            </div>
+                            <div class="form-group">
+                                <label> تعداد محصول<span class="text-danger">*</span></label>
+                                <input asp-for="QuantityInStock" type="number" class="form-control" />
+                                <span class="text-danger" asp-validation-for="QuantityInStock"></span>
                             </div>
                         </div>
 
