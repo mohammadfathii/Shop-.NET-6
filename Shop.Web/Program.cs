@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Shop.Web.Data;
+using Shop.Web.Data.Services;
+using Shop.Web.Data.Services.Interfaces;
 using Shop.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ShopDBContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddScoped<IServerSideService,ServerSideService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {

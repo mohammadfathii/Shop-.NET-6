@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Category>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">تمامی دسته بندی ها</h3><br />
+                    <a asp-controller="Category" asp-action="Create" type="button" class="btn btn-success text-light float-right"><i class="fa fa-plus"></i> اضافه کردن دسته بندی جدید</a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="products" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>نام</th>
+                                <th>توضیحات</th>
+                                <th>تعداد محصولات</th>
+                                <th>اقدامات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in Model)
+                            {
+                                <tr>
+                                    <td>@category.Id</td>
+                                    <td>@category.Name</td>
+                                    <td>@category.Description</td>
+                                    <td>@category.Products.Count()</td>
+                                    <td class="btn-group">
+                                        <a asp-controller="Category" asp-action="Show" asp-route-id="@category.Id" class="btn btn-info">نمایش</a>
+                                        <a asp-controller="Category" asp-action="Update" asp-route-id="@category.Id" class="btn btn-warning">ویرایش</a>
+                                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger">حذف</a>
+                                    </td>
+                                </tr>
+                            }
+                            @if (Model.Count() == 0)
+                            {
+                                <tr>
+                                    <td>یافت نشد</td>
+                                    <td>یافت نشد</td>
+                                    <td>یافت نشد</td>
+                                    <td>یافت نشد</td>
+                                    <td class="btn-group">
+                                        <a class="btn btn-info">یافت نشد</a>
+                                        <a class="btn btn-warning">یافت نشد</a>
+                                        <a class="btn btn-danger">یافت نشد</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>نام</th>
+                                <th>توضیحات</th>
+                                <th>تعداد محصولات</th>
+                                <th>اقدامات</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+@section Scripts{
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="~/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <!-- SlimScroll -->
+    <script src="~/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src=".~/dist/js/demo.js"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#products").DataTable({
+                "language": {
+                    "paginate": {
+                        "next": "بعدی",
+                        "previous": "قبلی"
+                    }
+                },
+                "info": false,
+            });
+        });
+    </script>
+}
