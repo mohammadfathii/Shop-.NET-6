@@ -1,6 +1,6 @@
 ﻿@model Product
 
-<div class="col mb-5">
+<div class="col-md-6">
     <div class="card h-100">
         <!-- Sale badge-->
         @if (Model.QuantityInStock > 0)
@@ -15,10 +15,10 @@
                 <!-- Product name-->
                 <h5 class="fw-bolder">@Model.Name</h5>
                 <!-- Product price-->
-                @if (Model.Discount.DiscountPercent > 0)
+                @if (Model.DiscountPercent > 0)
                 {
-                    <span class="text-muted text-decoration-line-through">@Model.Price</span>
-                    @(Model.Price * Model.Discount.DiscountPercent / 100 )
+                    <span class="text-muted text-decoration-line-through">@Model.Price.ToString("n0") <b>ریال</b></span>
+                    <p>@((Model.Price * Model.DiscountPercent / 100).ToString("n0")) <b>ریال</b></p>
                 }
                 else{
                     <span class="text-muted">@Model.Price</span>
@@ -27,11 +27,11 @@
         </div>
         <!-- Product actions-->
         <div>
-            <span class="text-muted"><a asp-controller="Home" asp-action="Category" asp-route-id="@Model.Category.Id">@Model.Category.Name</a></span>
+            <span class="text-muted text-center"><a class="btn text-danger" asp-controller="Home" asp-action="Category" asp-route-id="@Model.Category.Id">@Model.Category.Name</a></span>
 
         </div>
         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a asp-controller="User" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+            <div class="text-center"><a asp-controller="User" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-outline-dark mt-auto">Add to cart</a></div>
         </div>
     </div>
 </div>

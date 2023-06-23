@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 using Shop.Web.Data;
 using Shop.Web.Data.Services;
@@ -15,12 +16,26 @@ builder.Services.AddDbContext<ShopDBContext>(options => options.UseSqlServer(
 
 builder.Services.AddScoped<IServerSideService,ServerSideService>();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
+// adding cookie and google authentication
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme; 
+})
+.AddCookie(option =>
 {
     option.LoginPath = "/Auth/Login";
     option.LogoutPath = "/Auth/Logout";
     option.ExpireTimeSpan = TimeSpan.FromHours(2);
+})
+.AddGoogle(option =>
+{
+    option.ClientId = "532795944052-etast210paiphfvqhm966mi53igsm0f4.apps.googleusercontent.com";
+    option.ClientSecret = "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";
+    option.SaveTokens = true;
 });
+
+// end
 
 var app = builder.Build();
 

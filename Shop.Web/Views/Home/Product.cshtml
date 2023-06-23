@@ -11,9 +11,9 @@
             Quantity in Stock : @Model.QuantityInStock
         </p>
         <br />
-        @if (Model.Discount != null)
+        @if (Model.DiscountPercent != 0)
         {
-            <h2 class="text-success"><span class="text-danger text-decoration-line-through">@Model.Price</span> @(Model.Price * Model.Discount.DiscountPercent / 100)</h2>
+            <h2 class="text-success"><span class="text-danger text-decoration-line-through">@Model.Price</span> @(Model.Price * Model.DiscountPercent / 100)</h2>
         }else
         {
             <h2 class="text-success">@Model.Price</h2>

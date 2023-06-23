@@ -1,4 +1,5 @@
 ﻿using Shop.Web.Data.Services.Interfaces;
+using System.Security.Cryptography;
 
 namespace Shop.Web.Data.Services
 {
@@ -9,9 +10,16 @@ namespace Shop.Web.Data.Services
             throw new NotImplementedException();
         }
 
-        public Task<string> CodeGenerator(int length)
+        public async Task<string> CodeGenerator(int length)
         {
-            throw new NotImplementedException();
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                byte[] bytes = new byte[length];
+                rng.GetBytes(bytes);
+                string result = Convert.ToBase64String(bytes);
+                result = result.Replace('/', '_').Replace('+', '-'); // Replace URL-unsafe characters
+                return result.Substring(0, length); // Output first n characters of the string
+            }
         }
 
         public async Task<string> UploadFile(IFormFile file, string path)
@@ -24,7 +32,7 @@ namespace Shop.Web.Data.Services
                 await file.CopyToAsync(stream);
             }
 
-            return uploadpath;
+            return CP;
         }
     }
 }

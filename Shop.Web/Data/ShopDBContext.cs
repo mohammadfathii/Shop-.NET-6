@@ -17,7 +17,6 @@ namespace Shop.Web.Data
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<ReportMessage> ReportMessages { get; set; }
-        public DbSet<Discount> Discounts { get; set; }
         public DbSet<AD> ADs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,15 +28,6 @@ namespace Shop.Web.Data
             modelBuilder.Entity<Comment>()
             .HasOne(s => s.User)
             .WithMany(u => u.Comments)
-            .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Product>()
-            .HasOne(s => s.Discount)
-            .WithOne(u => u.Product)
-            .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Discount>()
-            .HasOne(s => s.Product)
-            .WithOne(u => u.Discount)
             .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);

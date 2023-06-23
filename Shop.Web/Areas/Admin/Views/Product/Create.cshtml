@@ -4,7 +4,7 @@
 <section class="content">
     <h1 class="card-title text-center p-2">اضافه کردن محصول جدید</h1>
 
-    <form asp-action="Create" method="post" class="row">
+    <form asp-action="Create" method="post" class="row" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
         <div class="col-md-12">
             <div class="card card-default">
@@ -28,19 +28,19 @@
                             </div>
                             <div class="form-group">
                                 <label>دسته بندی محصول<span class="text-danger">*</span></label>
-                                <select asp-for="CategoryId" class="form-control select2" style="width: 100%;">
-                                    <option selected="selected">---Select Category---</option>
-                                    @foreach (var category in Model.Categories)
-                                    {
-                                        <option value="@category.Id">@category.Name</option>
-                                    }
-                                </select>
+                                @Html.LabelFor(model => model.CategoryId)
+                                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "-- Select Category --", new { @class = "form-control" })
                                 <span class="text-danger" asp-validation-for="CategoryId"></span>
                             </div>
                             <div class="form-group">
                                 <label>درصد تخفیف محصول - <span class="text-success">اختیاری</span></label>
                                 <input asp-for="DiscountPercent" type="number" class="form-control" />
                                 <span class="text-danger" asp-validation-for="DiscountPercent"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>تعداد استفاده تخفیف - <span class="text-success">اختیاری</span></label>
+                                <input asp-for="DiscountCount" type="number" class="form-control" />
+                                <span class="text-danger" asp-validation-for="DiscountCount"></span>
                             </div>
                         </div>
 
@@ -49,7 +49,7 @@
                                 <label>انتخاب تصویر<span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input asp-for="Thumbnail" type="file" class="custom-file-input">
+                                        <input asp-for="Thumbnail" type="file" class="custom-file-input form-control">
                                         <label class="custom-file-label">انتخاب فایل</label>
                                         <span class="text-danger" asp-validation-for="Thumbnail"></span>
                                     </div>
@@ -101,7 +101,7 @@
             <!-- /.card -->
         </div>
         @*Submit Button*@
-        <div class="col-md-12">
+        <div class="col-md-12 mt-3 mb-4">
             <button type="submit" class="btn btn-primary text-light float-right"><i class="fa fa-plus"></i> اضافه کردن محصول جدید</button>
         </div>
     </form>

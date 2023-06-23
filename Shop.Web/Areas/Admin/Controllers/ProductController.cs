@@ -21,7 +21,7 @@ namespace Shop.Web.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var products = Context.Products.Include(p => p.Discount).Include(p => p.Category).ToList();
+            var products = Context.Products.Include(p => p.Category).ToList();
             return View(products);
         }
 
@@ -40,6 +40,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             product.Categories = Categories;
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError("Name", "Something is wrong");
                 return View(product);
             }
             if (product.Price < 10000)
@@ -62,25 +63,15 @@ namespace Shop.Web.Areas.Admin.Controllers
                 Thumbnail = thumbnail,
                 QuantityInStock = product.QuantityInStock,
             };
-            Context.Products.Add(Product);
-
-            
-            if (product.DiscountPercent > 0 && product.DiscountPercent < 100)
+            if (product.DiscountPercent > 0)
             {
-                var discount = new Discount()
-                {
-                    Count = product.DiscountCount,
-                    DiscountPercent = product.DiscountPercent,
-                    ProductId = Product.Id
-                };
-                Context.Discounts.Add(discount);
-                Context.SaveChanges();
-                Product.DiscountId = discount.Id;
-                return RedirectToAction("Product");
+                Product.DiscountPercent = product.DiscountPercent;
+                Product.DiscountCount = product.DiscountCount;
             }
 
+            Context.Products.Add(Product);
             Context.SaveChanges();
-            return RedirectToAction("Product");
+            return RedirectToAction("Index");
         }
 
     }

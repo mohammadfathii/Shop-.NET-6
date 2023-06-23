@@ -14,7 +14,7 @@ namespace Shop.Web.Controllers
         }
         public IActionResult Index()
         {
-            var products = Context.Products.Include(p => p.Category).Include(p => p.Discount).ToList();
+            var products = Context.Products.Include(p => p.Category).ToList();
             return View(products);
         }
 
@@ -34,7 +34,7 @@ namespace Shop.Web.Controllers
             {
                 return NotFound();
             }
-            var Product = Context.Products.Include(c => c.Category).Include(p=>p.Discount)
+            var Product = Context.Products.Include(c => c.Category)
                 .FirstOrDefault(p => p.Id == Id);
             if (Product == null)
             {
@@ -54,13 +54,8 @@ namespace Shop.Web.Controllers
                 Price = 20000,
                 Description = "Test",
                 QuantityInStock = 5,
-                Discount = new Discount() {
-                    Id = 3,
-                    Count = 12,
-                    DiscountPercent = 20,
-                    ExpireTime = DateTime.Now,
-                }
-                ,DiscountId = 3,
+                DiscountPercent = 20,
+                DiscountCount = 3,
                 Category = new Category()
                 {
                     Id = 1,
