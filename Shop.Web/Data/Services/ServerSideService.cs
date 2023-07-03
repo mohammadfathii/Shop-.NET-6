@@ -7,7 +7,13 @@ namespace Shop.Web.Data.Services
     {
         public async Task<bool> DeleteFile(string path)
         {
-            throw new NotImplementedException();
+            var file = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Uploads\", path);
+            if (File.Exists(file))
+            {
+                File.Delete(file);
+                return true;
+            }
+            return false;
         }
 
         public async Task<string> CodeGenerator(int length)

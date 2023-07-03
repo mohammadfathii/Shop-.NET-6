@@ -14,7 +14,7 @@ namespace Shop.Web.Controllers
         }
         public IActionResult Index()
         {
-            var products = Context.Products.Include(p => p.Category).ToList();
+            var products = Context.Products.Include(p => p.Category).ToList().Take(30);
             return View(products);
         }
 
@@ -24,8 +24,8 @@ namespace Shop.Web.Controllers
             {
                 return NotFound();
             }
-            var ProductsOfCategory = Context.Categories.Include(c => c.Products).FirstOrDefault(p => p.Id == Id).Products.ToList();
-            return View();
+            var ProductsOfCategory = Context.Categories.Include(c => c.Products).FirstOrDefault(p => p.Id == Id);
+            return View(ProductsOfCategory);
         }
 
         public IActionResult Product(int Id)

@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<AD>
-
-@foreach(var AD in Model){
-    <div class="card">
-        <div class="card-body">
+<div class="row">
+    @foreach(var AD in Model){
+        <div class="col-md-12">
             <a href="@AD.URL"><img src="~/Uploads/Images/ADS/@AD.Thumbnail" alt="@AD.Title" class="img-fluid"></a>
         </div>
-    </div>
-    <hr />
-}
-
+        <hr />
+    }
+</div>

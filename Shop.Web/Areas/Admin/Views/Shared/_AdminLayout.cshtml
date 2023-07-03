@@ -133,9 +133,9 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                <a asp-controller="Discount" asp-action="Create" class="nav-link">
+                <a asp-controller="ADs" asp-action="Create" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>ساخت تخفیف جدید</p>
+                    <p>ساخت تبلیغ جدید</p>
                   </a>
                 </li>
               </ul>
@@ -155,6 +155,13 @@
             </li>
 
             <li class="nav-item">
+                <a asp-controller="Ads" asp-action="Index" class="nav-link">
+                    <i class="nav-icon fa fa-user"></i>
+                    <p>تبلیغات</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a asp-controller="Discount" asp-action="Index" class="nav-link">
                     <i class="nav-icon fa fa-percent"></i>
                     <p>تخفیف ها</p>
@@ -165,13 +172,6 @@
                 <a asp-controller="Report" asp-action="Index" class="nav-link">
                     <i class="nav-icon fa fa-bug"></i>
                     <p>گزارشات</p>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a asp-controller="Ads" asp-action="Index" class="nav-link">
-                    <i class="fa-sharp fa-light fa-globe"></i>
-                    <p>تبلیغات</p>
                 </a>
             </li>
 

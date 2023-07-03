@@ -1,0 +1,44 @@
+﻿@model CreateUpdateAdsViewModel
+
+<div class="row p-4">
+    <div class="col-md-12">
+        <h4>لیست تبلیغ ها :</h4><br />
+        <hr />
+    </div>
+    <div class="col-md-12">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">دسته بندی</label>
+                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">عنوان</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">آدرس تبلیغ</label>
+                <input asp-for="URL" class="form-control" />
+                <span asp-validation-for="URL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">عکس</label>
+                <input asp-for="Thumbnail" class="form-control" />
+                <span asp-validation-for="Thumbnail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ انقضا</label>
+                <input asp-for="ExpireTime" class="form-control" />
+                <span asp-validation-for="ExpireTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت تبلیغ جدید" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

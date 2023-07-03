@@ -14,7 +14,7 @@ namespace Shop.Web.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var currentTime = DateTime.UtcNow;
-            var randomAds = Context.ADs.OrderBy(x => Guid.NewGuid()).Where(ad => ad.ExpireTime > currentTime).Take(5).ToList();
+            var randomAds = Context.ADs.OrderBy(x => Guid.NewGuid()).Where(ad => ad.ExpireTime < currentTime).Take(5).ToList();
             return View("Components/ADSViewComponent.cshtml",randomAds);
         }
 

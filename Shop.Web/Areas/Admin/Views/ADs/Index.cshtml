@@ -1,44 +1,42 @@
-﻿@model IEnumerable<Product>
-    <!-- Main content -->
+﻿@model IEnumerable<AD>
+<!-- Main content -->
 <section class="content">
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">تمامی محصولات</h3><br />
-                    <a asp-controller="Product" asp-action="Create" type="button" class="btn btn-success text-light float-right"><i class="fa fa-plus"></i> اضافه کردن محصول جدید</a>
+                    <h3 class="card-title">تمامی تبلیغات ها</h3><br />
+                    <a asp-controller="ADs" asp-action="Create" type="button" class="btn btn-success text-light float-right"><i class="fa fa-plus"></i> اضافه کردن تبلیغ جدید</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="products" class="table table-bordered table-striped">
+                    <table id="ADs" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>نام محصول</th>
-                                <th>تصویر محصول</th>
+                                <th>نام تبلیغ</th>
+                                <th>عکس</th>
                                 <th>دسته بندی</th>
-                                <th>تعداد</th>
-                                <th>قیمت</th>
-                                <th>تخفیف</th>
+                                <th>تاریخ انقضا</th>
+                                <th>آدرس سایت</th>
                                 <th>اقدامات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(var product in Model){
+                            @foreach(var AD in Model){
                                 <tr>
-                                    <td>@product.Id</td>
-                                    <td>@product.Name</td>
+                                    <td>@AD.Id</td>
+                                    <td>@AD.Title</td>
                                     <td>
-                                        <img width="100" src="~/Uploads/Images/Products/@product.Thumbnail" />
+                                        <img width="150px" src="~/Uploads/Images/ADs/@AD.Thumbnail" />
                                     </td>
-                                    <td>@product.Category.Name</td>
-                                    <th>@product.QuantityInStock.ToString("n0")</th>
-                                    <td>@product.Price.ToString("n0")</td>
-                                    <td>% @product.DiscountPercent</td>
+                                    <td>@AD.Category.Name</td>
+                                    <td>@AD.ExpireTime</td>
+                                    <td>@AD.URL</td>
                                     <td class="btn-group">
-                                        <a asp-controller="Product" asp-action="Show" asp-route-id="@product.Id" class="btn btn-info">نمایش</a>
-                                        <a asp-controller="Product" asp-action="Update" asp-route-id="@product.Id" class="btn btn-warning">ویرایش</a>
-                                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">حذف</a>
+                                        <a asp-controller="ADs" asp-action="Details" asp-route-id="@AD.Id" class="btn btn-info">نمایش</a>
+                                        <a asp-controller="ADs" asp-action="Edit" asp-route-id="@AD.Id" class="btn btn-warning">ویرایش</a>
+                                        <a asp-controller="ADs" asp-action="Delete" asp-route-id="@AD.Id" class="btn btn-danger">حذف</a>
                                     </td>
                                 </tr>
                             }
@@ -47,10 +45,9 @@
                                     <td>یافت نشد</td>
                                     <td>یافت نشد</td>
                                     <td>
-                                        <img src="~/Uploads/Images/Products/" />
+                                        <img src="~/Uploads/Images/ADs/" />
                                     </td>
                                     <td>یافت نشد</td>
-                                    <th>یافت نشد</th>
                                     <td>یافت نشد</td>
                                     <td>یافت نشد</td>
                                     <td class="btn-group">
@@ -65,12 +62,11 @@
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>نام محصول</th>
-                                <th>تصویر محصول</th>
+                                <th>نام تبلیغ</th>
+                                <th>عکس</th>
                                 <th>دسته بندی</th>
-                                <th>تعداد</th>
-                                <th>قیمت</th>
-                                <th>تخفیف</th>
+                                <th>تاریخ انقضا</th>
+                                <th>آدرس سایت</th>
                                 <th>اقدامات</th>
                             </tr>
                         </tfoot>
@@ -103,7 +99,7 @@
     <!-- page script -->
     <script>
         $(function () {
-            $("#products").DataTable({
+            $("#ADs").DataTable({
                 "language": {
                     "paginate": {
                         "next": "بعدی",
