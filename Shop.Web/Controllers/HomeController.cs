@@ -14,7 +14,7 @@ namespace Shop.Web.Controllers
         }
         public IActionResult Index()
         {
-            var products = Context.Products.Include(p => p.Category).ToList().Take(30);
+            var products = Context.Products.Include(p => p.Category).ToList().Take(12);
             return View(products);
         }
 
@@ -42,44 +42,6 @@ namespace Shop.Web.Controllers
             }
             return View(Product);
         }
-
-        #region Tests
-        public IActionResult TestArticleViewModel()
-        {
-            return View("Product",new Product()
-            {
-                Id = 2,
-                Name = "Test",
-                Thumbnail = "Test",
-                Price = 20000,
-                Description = "Test",
-                QuantityInStock = 5,
-                DiscountPercent = 20,
-                DiscountCount = 3,
-                Category = new Category()
-                {
-                    Id = 1,
-                    Name = "Test Category" ,
-                    Description = "Test"
-                },
-                CategoryId = 1
-            });
-        }
-
-        public IActionResult TestCategoryViewModel()
-        {
-            return View("Category", new Category()
-            {
-                Id = 1,
-                Name = "Test",
-                Description = "Test",
-                Products = new List<Product>()
-            });
-        }
-
-
-        #endregion
-        
 
     }
 }

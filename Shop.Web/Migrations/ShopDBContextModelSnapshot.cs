@@ -34,7 +34,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ChatUser");
+                    b.ToTable("ChatUser", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.AD", b =>
@@ -70,7 +70,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ADs");
+                    b.ToTable("ADs", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Category", b =>
@@ -91,7 +91,7 @@ namespace Shop.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Chat", b =>
@@ -111,7 +111,7 @@ namespace Shop.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chats");
+                    b.ToTable("Chats", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Comment", b =>
@@ -138,7 +138,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Message", b =>
@@ -165,7 +165,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Order", b =>
@@ -186,7 +186,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.OrderDetail", b =>
@@ -212,7 +212,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Product", b =>
@@ -254,7 +254,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.Report", b =>
@@ -283,7 +283,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reports");
+                    b.ToTable("Reports", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.ReportMessage", b =>
@@ -308,7 +308,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportMessages");
+                    b.ToTable("ReportMessages", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.SubComment", b =>
@@ -335,7 +335,7 @@ namespace Shop.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SubComments");
+                    b.ToTable("SubComments", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Web.Models.User", b =>
@@ -398,7 +398,7 @@ namespace Shop.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ChatUser", b =>

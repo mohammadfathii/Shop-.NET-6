@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Web.Data;
 using Shop.Web.Data.Services.Interfaces;
 using Shop.Web.Models;
-using Shop.Web.Models.ViewModel;
-using System.Security.Policy;
 
 namespace Shop.Web.Areas.Admin.Controllers
 {
@@ -59,22 +57,15 @@ namespace Shop.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateUpdateAdsViewModel aD)
+        public async Task<IActionResult> Create(AD aD)
         {
             var image = "ad";
-            if (aD.Thumbnail.Length > 0)
+            if (aD.formFile.Length > 0)
             {
-                image = await _service.UploadFile(aD.Thumbnail,@"Images\Ads\");
+                image = await _service.UploadFile(aD.formFile,@"Images\Ads\");
             }
-            var AD = new AD()
-            {
-                Title = aD.Title,
-                URL = aD.URL,
-                Thumbnail = image,
-                ExpireTime = aD.ExpireTime,
-                CategoryId = aD.CategoryId,
-            };
-            _context.Add(AD);
+            aD.Thumbnail = image;
+            _context.Add(aD);
             await _context.SaveChangesAsync();
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", aD.CategoryId);
             return RedirectToAction(nameof(Index));
@@ -83,27 +74,18 @@ namespace Shop.Web.Areas.Admin.Controllers
         // GET: Admin/ADs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null || _context.ADs == null)
             {
                 return NotFound();
             }
-
             var aD = await _context.ADs.FindAsync(id);
             if (aD == null)
             {
                 return NotFound();
             }
-            var ADVM = new CreateUpdateAdsViewModel()
-            {
-                Id = aD.Id,
-                Title = aD.Title,
-                Image = aD.Thumbnail,
-                CategoryId=aD.CategoryId,
-                ExpireTime =aD.ExpireTime,
-                URL = aD.URL,
-            };
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", aD.CategoryId);
-            return View(ADVM);
+            return View(aD);
         }
 
         // POST: Admin/ADs/Edit/5
@@ -111,31 +93,37 @@ namespace Shop.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CreateUpdateAdsViewModel aD)
+        public async Task<IActionResult> Edit(int id, AD aD)
         {
             if (id != aD.Id)
             {
-               return NotFound();
+                return NotFound();
             }
-            var findad = _context.ADs.FirstOrDefault(p => p.Id == id);
-            aD.Image = findad.Thumbnail;
+
             try
             {
+                var existingAd = _context.ADs.FirstOrDefault(p => p.Id == id);
+
+                if (existingAd == null)
+                {
+                    return NotFound();
+                }
+
                 var image = "";
                 if (aD.Thumbnail != null && aD.Thumbnail.Length > 0)
                 {
-                    _service.DeleteFile(@"Images\Ads\" + findad.Thumbnail);
-                    image = await _service.UploadFile(aD.Thumbnail,@"Images\Ads\");
+                    if (!string.IsNullOrEmpty(existingAd.Thumbnail))
+                    {
+                        _service.DeleteFile(@"Images\Ads\" + existingAd.Thumbnail);
+                    }
+                    image = await _service.UploadFile(aD.formFile, @"Images\Ads\");
                 }
-                _context.ADs.Update(new AD(){
-                    Id = id,
-                    Title = aD.Title,
-                    URL = aD.URL,
-                    Thumbnail = image == "" ? aD.Image : image,
-                    ExpireTime = aD.ExpireTime,
-                    CategoryId = aD.CategoryId,
-                    Created = DateTime.Now,
-                });
+                existingAd.Title = aD.Title;
+                existingAd.URL = aD.URL;
+                existingAd.Thumbnail = image == "" ? existingAd.Thumbnail : image;
+                existingAd.ExpireTime = aD.ExpireTime;
+
+                _context.Update(existingAd);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -149,8 +137,10 @@ namespace Shop.Web.Areas.Admin.Controllers
                     throw;
                 }
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", aD.CategoryId);
             return RedirectToAction(nameof(Index));
+
         }
 
         // GET: Admin/ADs/Delete/5

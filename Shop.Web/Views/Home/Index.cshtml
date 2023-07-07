@@ -4,11 +4,14 @@
 <section >
     <div >
         <div class="row">
-            <h1>Articles : </h1>
+            <h1>Products : </h1>
+            <hr />
             @foreach (var product in Model)
             {
                 <partial name="_ShowProduct" model="product" />
             }
         </div>
-    </div>
+
+        @await Component.InvokeAsync("ProductSliderComponent")
+        
 </section>
