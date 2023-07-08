@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Threading.Tasks;
 
 namespace Shop.Web.Middlewares
@@ -46,4 +47,6 @@ namespace Shop.Web.Middlewares
             return builder.UseMiddleware<AuthMiddleware>();
         }
     }
+
+ 
 }

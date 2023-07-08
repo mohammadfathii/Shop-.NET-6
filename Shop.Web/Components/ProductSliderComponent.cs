@@ -12,7 +12,7 @@ namespace Shop.Web.Components
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var products = Context.Products.OrderBy(p => Guid.NewGuid()).Take(2);
+            var products = Context.Products.OrderBy(p => Guid.NewGuid()).Take(3);
             return View("Components/ProductSliderViewComponent.cshtml", products);
         }
     }

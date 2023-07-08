@@ -13,7 +13,9 @@
         <br />
         @if (Model.DiscountPercent != 0)
         {
-            <h2 class="text-success"><span class="text-danger text-decoration-line-through">@Model.Price</span> @(Model.Price * Model.DiscountPercent / 100)</h2>
+            <h2 class="text-success">
+                <span class="text-danger text-decoration-line-through">@Model.Price.ToString("n0")</span> @(Model.Price.GetDiscountPercent(Model.DiscountPercent).ToString("n0"))
+            </h2>
         }else
         {
             <h2 class="text-success">@Model.Price</h2>

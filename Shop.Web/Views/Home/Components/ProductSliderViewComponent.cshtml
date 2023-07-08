@@ -1,32 +1,27 @@
 ﻿@model IEnumerable<Product>
 
-<div id="banner" style="height: 350px">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="7000">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" active></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        </ol>
-        <div class="carousel-inner">
-            @foreach (var product in Model)
-            {
-                <div class="carousel-item active" style="height: 350px">
-                    <div class="p-4 bounceIn">
-                        <a asp-controller="Home" asp-action="Product" asp-route-id="@product.Id">
-                            <img width="100%" height="100%" style="padding:0;margin:0" src="~/Uploads/Images/Products/@product.Thumbnail" alt="@product.Name" />
-                        </a>
-                    </div>
-                </div>
-            }
-        </div>
-        <a class="carousel-control-prev" href="#mainBanner" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only"></span>
-        </a>
-        <a class="carousel-control-next" href="#mainBanner" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only"></span>
-        </a>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        @foreach (var Product in Model)
+        {
+            <div class="carousel-item active">
+                <img width="100%" class="d-block w-100" src="~/Uploads/Images/Products/@Product.Thumbnail" alt="@Product.Name">
+            </div>
+        }
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only"></span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only"></span>
+    </a>
 </div>
 
 
@@ -45,7 +40,7 @@
         }, 700);
 
         // Animate after the slider changes
-        $("#mainBanner").on("slid.bs.carousel", function (e) {
+        $("#carouselExampleIndicators").on("slid.bs.carousel", function (e) {
             // Add .d-none to previous shown slide
             $(".carousel-item *").addClass("d-none");
 
