@@ -1,0 +1,38 @@
+@model IEnumerable<Category>
+
+<style>
+    .hoverToRotate {
+        transition: all 1s ease-in-out;
+    }
+    .hoverToRotate :hover{
+        transition: all 1s ease-in-out;
+        transform: rotate(360deg);
+    }
+</style>
+
+<div class="container">
+    <hr />
+    <br>
+    <h1>Top Categories : </h1>
+    <br>
+    <div class="row">
+        <div class="d-flex justify-space-around justify-content-center">
+            @foreach (var category in Model)
+            {
+                <div class="col-lg-3 m-2 hoverToRotate">
+                    <center>
+                        <div class="card bg-dark text-white">
+                            <div style="width: 100%;height : 350px;" class="card-img bg-dark"></div>
+                            <div class="card-img-overlay">
+                                <h5 class="card-title">@category.Name</h5>
+                                <p class="card-text">@category.Description</p>
+                                <p class="card-text text-primary">@category.Products.Count()</p>
+                                <a asp-controller="Home" class="btn text-light" asp-action="Category" asp-route-id="@category.Id">Show</a>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            }
+        </div>
+    </div>
+</div>
