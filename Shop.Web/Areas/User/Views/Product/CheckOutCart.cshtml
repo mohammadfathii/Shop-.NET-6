@@ -31,10 +31,7 @@
                 <td>@item.Quantity</td>
                 <td>@(item.Product.DiscountPercent > 0 ?  (item.Quantity * item.Product.Price.GetDiscountPercent(item.Product.DiscountPercent)).ToString("n0") : (item.Quantity * item.Product.Price).ToString("n0"))</td>
                 <td class="btn-group">
-                    <a class="btn btn-danger" asp-controller="Product" asp-action="Remove" asp-route-id="@item.Product.Id">
-                        <i class="fa fa-remove"></i>
-                    </a>
-                    <a class="btn btn-warning" asp-controller="Product" asp-action="Minus" asp-route-id="@item.Product.Id">
+                    <a class="btn btn-warning" asp-controller="Product" asp-action="Minus" asp-route-id="@item.Id">
                         <i class="fa fa-minus"></i>
                     </a>
                 </td>

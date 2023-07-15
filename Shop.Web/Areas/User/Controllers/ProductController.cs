@@ -62,10 +62,37 @@ namespace Shop.Web.Areas.User.Controllers
             }
             return RedirectToAction("CheckOutCart", "Product");
         }
+        [Route("/User/Product/Minus/{OrderDetailId}")]
+        public IActionResult Minus(int OrderDetailId)
+        {
+            var order = Context.Orders.Include(o => o.OrderDetails).FirstOrDefault(o => o.isFinally == false && o.UserId == int.Parse(User.FindFirst("Id").Value));
+            if (order != null)
+            {
+                var od = order.OrderDetails.FirstOrDefault(od => od.Id == OrderDetailId);
+                if (od != null)
+                {
+                    if (od.Quantity == 1)
+                    {
+                        Context.OrderDetails.Remove(od);
+                        Context.SaveChanges();
+                        return RedirectToAction("CheckOutCart", "Product");
+                    }
+                    od.Quantity -= 1;
+                    Context.OrderDetails.Update(od);
+                    Context.SaveChanges();
+                    return RedirectToAction("CheckOutCart", "Product");
+                }
+            }
+            return RedirectToAction("CheckOutCart", "Product");
+
+        }
 
         [ValidateAntiForgeryToken]
         public IActionResult Buy()
         {
+            // if(Context.Users.FindAsync()){
+
+            // }
             if (Context.Orders.FirstOrDefault(o => o.isFinally == false && o.UserId == int.Parse(User.FindFirst("Id").Value)) == null)
             {
                 return NotFound();
