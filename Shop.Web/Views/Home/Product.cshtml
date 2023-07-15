@@ -22,7 +22,7 @@
         }
         @if (Model.QuantityInStock > 0)
         {
-            <a asp-controller="User" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-block btn-primary">Add To Cart</a>
+            <a asp-area="User" asp-controller="Product" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-block btn-primary">Add To Cart</a>
         }else
         {
             <a class="btn btn-block btn-primary disabled">Add To Card (Out of Stock)</a>
