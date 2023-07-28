@@ -12,10 +12,13 @@ namespace Shop.Web.Models.ViewModel
         [EmailAddress]
         [Required]
         public string Email { get; set; }
+        [MinLength(8)]
+        [MaxLength(40)]
         [DataType(DataType.Password)]
-        [Range(8,40,ErrorMessage = "Password Must Between 8 and 40 characters")]
         [Required]
         public string Password { get; set; }
+        [MinLength(8)]
+        [MaxLength(40)]
         [DataType(DataType.Password)]
         [Compare("Password")]
         [Required]

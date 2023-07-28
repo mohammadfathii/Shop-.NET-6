@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\User\Views\" />
     <Folder Include="wwwroot\Uploads\Images\Avatars\" />
     <Folder Include="wwwroot\Uploads\Images\Ads\" />
     <Folder Include="wwwroot\Uploads\Images\Products\" />

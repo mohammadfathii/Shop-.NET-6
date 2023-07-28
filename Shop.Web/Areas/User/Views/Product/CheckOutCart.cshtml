@@ -53,8 +53,5 @@
 
 <h2>قیمت کل : @totalPrice.ToString("n0")</h2>
 
-<form asp-controller="Product" asp-action="Buy" method="post">
-    @Html.AntiForgeryToken()
-    <button class="btn btn-block btn-success p-2" type="submit">پرداخت مستقیم با زرین پال</button>
-</form>
+    <a class="btn btn-block btn-success p-2" asp-controller="Product" asp-action="Buy">پرداخت مستقیم با زرین پال</a>
 

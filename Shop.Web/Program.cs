@@ -21,20 +21,20 @@ builder.Services.AddScoped<IServerSideService,ServerSideService>();
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    option.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme; 
+    option.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 })
 .AddCookie(option =>
 {
     option.LoginPath = "/Auth/Login";
     option.LogoutPath = "/Auth/Logout";
     option.ExpireTimeSpan = TimeSpan.FromHours(2);
-})
-.AddGoogle(option =>
-{
-    option.ClientId = "532795944052-etast210paiphfvqhm966mi53igsm0f4.apps.googleusercontent.com";
-    option.ClientSecret = "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";
-    option.SaveTokens = true;
 });
+//.AddGoogle(option =>
+//{
+//    option.ClientId = "532795944052-etast210paiphfvqhm966mi53igsm0f4.apps.googleusercontent.com";
+//    option.ClientSecret = "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";
+//    option.SaveTokens = true;
+//});
 
 // end
 
