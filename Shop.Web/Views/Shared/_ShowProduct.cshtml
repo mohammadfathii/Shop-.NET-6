@@ -1,8 +1,11 @@
 ﻿@model Product
+<link href="~/css/site.css" rel="stylesheet" />
 
-<div class="col-md-6 mb-5">
+
+
+<div class="col-md-6 mb-5" data-aos="zoom-in">
     <div class="card h-100 myhover" id="productId@(Model.Id)">
-        <div class="showMore" id="showMoreBox@(Model.Id)" style="visibility:hidden">
+        <div class="showMore" @*id="showMoreBox@(Model.Id)"*@>
             <!-- Product actions-->
             <div style="margin-top:10rem" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center"><a asp-controller="Home" asp-action="Product" asp-route-id="@Model.Id" class="btn btn-outline-dark mt-auto">Show More ...</a></div>
@@ -44,7 +47,7 @@
 </div>
 
 
-    <script>
+@*    <script>
         var element@(Model.Id) = document.getElementById("productId@(Model.Id)");
         var showBarElement = document.createElement("div")
             element@(Model.Id).addEventListener("mouseenter", function () {
@@ -57,3 +60,6 @@
             e.style.visibility = "hidden"
         });
     </script>
+*@
+
+

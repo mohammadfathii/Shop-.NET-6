@@ -8,3 +8,10 @@
     color: white;
     margin: auto auto;
 }
+
+.showMore {
+    visibility: visible;
+    transition: all ease-in-out 0.5s;
+}
+
+

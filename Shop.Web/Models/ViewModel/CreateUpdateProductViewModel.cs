@@ -5,17 +5,11 @@ namespace Shop.Web.Models.ViewModel
 {
     public class CreateUpdateProductViewModel
     {
-        [AllowNull]
-        public int Id { get; set; } = 0;
-        [Required]
+        public int Id { get; set; }
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
-        [Required]
         public int CategoryId { get; set; }
-        [Required]
         public decimal Price { get; set; } = 10000;
-        [Required]
         public int QuantityInStock { get; set; }
         [AllowNull]
         [Range(0, 99)]
@@ -23,9 +17,10 @@ namespace Shop.Web.Models.ViewModel
         [AllowNull]
         [Range(0,9999999)]
         public int DiscountCount { get; set; } = 0;
-        [Required]
+        [AllowNull]
         public IFormFile Thumbnail { get; set; }
-
+        [AllowNull]
+        public string ThumbnailIMG { get; set; } = string.Empty;
         [AllowNull]
         public List<Category> Categories { get; set; } = new List<Category>();
 
