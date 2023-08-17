@@ -102,6 +102,7 @@ namespace Shop.Web.Controllers
                 return View(User);
             }
             var user = Context.Users.FirstOrDefault(u => u.Email == login.Email.ToLower() && u.Password == login.Password);
+            var Order = Context.Orders.Any(o => o.UserId == user.Id);
             if (user != null)
             {
                 if (user.VerifyToken == "")
@@ -114,6 +115,7 @@ namespace Shop.Web.Controllers
                         new Claim("UserName",user.UserName.ToString(),ClaimValueTypes.String),
                         new Claim("FullName",user.FullName.ToString(),ClaimValueTypes.String),
                         new Claim("Avatar",user.Avatar.ToString()),
+                        new Claim("HasAnyProductInCheckOutCart",Order.ToString(),ClaimValueTypes.Boolean),
                     };
                     var identityClaims = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principalClaims = new ClaimsPrincipal(identityClaims);
