@@ -7,8 +7,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.Google;
 
 namespace Shop.Web.Controllers
 {
@@ -117,6 +115,7 @@ namespace Shop.Web.Controllers
                         new Claim("Avatar",user.Avatar.ToString()),
                         new Claim("HasAnyProductInCheckOutCart",Order.ToString(),ClaimValueTypes.Boolean),
                     };
+
                     var identityClaims = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principalClaims = new ClaimsPrincipal(identityClaims);
                     var properties = new AuthenticationProperties()

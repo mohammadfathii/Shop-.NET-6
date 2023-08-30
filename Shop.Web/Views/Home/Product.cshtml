@@ -10,6 +10,12 @@
         <p class="@(Model.QuantityInStock == 0 ? "text-danger" : "text-success")">
             Quantity in Stock : @Model.QuantityInStock
         </p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="border-2 border p-2">
+                <a class="btn btn-warning btn-block" asp-area="User" asp-controller="Report" asp-action="Report" asp-route-id="@Model.Id">Report This Content</a>
+            </div>
+        }
         <br />
         @if (Model.DiscountPercent != 0)
         {
