@@ -28,6 +28,14 @@ namespace Shop.Web.Data.Services
             }
         }
 
+        public string TokenGenerator(int length)
+        {
+            using var rng = new RNGCryptoServiceProvider();
+            var bytes = new byte[length];
+            rng.GetBytes(bytes);
+            return Convert.ToBase64String(bytes);
+        }
+
         public async Task<string> UploadFile(IFormFile file, string path)
         {
             var CP = await CodeGenerator(30) + file.FileName;

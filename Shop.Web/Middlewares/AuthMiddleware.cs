@@ -44,6 +44,6 @@ namespace Shop.Web.Middlewares
             return builder.UseMiddleware<AuthMiddleware>();
         }
     }
-
- 
 }
+
+

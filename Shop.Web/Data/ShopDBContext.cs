@@ -29,6 +29,10 @@ namespace Shop.Web.Data
             .HasOne(s => s.User)
             .WithMany(u => u.Comments)
             .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ReportMessage>()
+            .HasOne(s => s.User)
+            .WithMany()
+            .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }

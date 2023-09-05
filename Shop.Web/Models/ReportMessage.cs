@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Web.Models
 {
@@ -11,5 +12,7 @@ namespace Shop.Web.Models
         public int ReportId { get; set; }
 
         public Report Report { get; set; }
+        
+        public User User { get; set; }
     }
 }

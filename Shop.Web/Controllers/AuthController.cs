@@ -2,45 +2,22 @@
 using Shop.Web.Models.ViewModel;
 using Shop.Web.Models;
 using Shop.Web.Data;
-using System.Security.Cryptography;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Shop.Web.Data.Services.Interfaces;
 
 namespace Shop.Web.Controllers
 {
     public class AuthController : Controller
     {
         public ShopDBContext Context { get; set; }
-        public AuthController(ShopDBContext context)
+        public IServerSideService ServerSideService { get; set; }
+        public AuthController(ShopDBContext context,IServerSideService serverSideService)
         {
             Context = context;
-        }
-        public string GetIP()
-        {
-            // Get the remote IP address from the HttpContext
-            string ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
-
-            // If the IP address is IPv6, extract the IPv4 address
-            if (ipAddress.Contains(":"))
-            {
-                ipAddress = ipAddress.Split(':')[0];
-            }
-
-            // Convert IP address to IPv4 format
-
-            // Do something with the IP address...
-
-            return ipAddress;
-        }
-
-        public static string TokenGenerator(int length)
-        {
-            using var rng = new RNGCryptoServiceProvider();
-            var bytes = new byte[length];
-            rng.GetBytes(bytes);
-            return Convert.ToBase64String(bytes);
+            ServerSideService = serverSideService;
         }
 
 
@@ -78,7 +55,7 @@ namespace Shop.Web.Controllers
                 IPAddress = "user",
                 IsAdmin = false,
                 LastLoginTime = DateTime.Now,
-                VerifyToken = TokenGenerator(40).ToString()
+                VerifyToken = ServerSideService.TokenGenerator(40).ToString()
             };
             Context.Users.Add(User);
             Context.SaveChanges();
