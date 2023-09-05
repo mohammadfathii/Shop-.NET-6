@@ -13,6 +13,7 @@ namespace Shop.Web.Areas.User.Controllers
     {
         public ShopDBContext Context;
         public object _locker = new object();
+        public object _MinusLocker = new object();
         public object _BuyLocker = new object();
         public ProductController(ShopDBContext context)
         {
@@ -37,10 +38,20 @@ namespace Shop.Web.Areas.User.Controllers
                 var order = Context.Orders.FirstOrDefault(o => o.isFinally == false && o.UserId == int.Parse(User.FindFirst("Id").Value));
                 if (order == null)
                 {
-                    Context.Orders.Add(new Models.Order()
+                    var neworder = new Models.Order()
                     {
                         UserId = int.Parse(User.FindFirst("Id").Value),
                         isFinally = false,
+                    };
+                    Context.Orders.Add(neworder);
+                    Context.SaveChanges();
+
+
+                    Context.OrderDetails.Add(new Models.OrderDetail()
+                    {
+                         OrderId = neworder.Id,
+                         ProductId = ProductId,
+                         Quantity = 1
                     });
                     Context.SaveChanges();
                 }
@@ -78,26 +89,28 @@ namespace Shop.Web.Areas.User.Controllers
         [Route("/User/Product/Minus/{OrderDetailId}")]
         public IActionResult Minus(int OrderDetailId)
         {
-            var order = Context.Orders.Include(o => o.OrderDetails).FirstOrDefault(o => o.isFinally == false && o.UserId == int.Parse(User.FindFirst("Id").Value));
-            if (order != null)
+            lock (_MinusLocker)
             {
-                var od = order.OrderDetails.FirstOrDefault(od => od.Id == OrderDetailId);
-                if (od != null)
+                var order = Context.Orders.Include(o => o.OrderDetails).FirstOrDefault(o => o.isFinally == false && o.UserId == int.Parse(User.FindFirst("Id").Value));
+                if (order != null)
                 {
-                    if (od.Quantity == 1)
+                    var od = order.OrderDetails.FirstOrDefault(od => od.Id == OrderDetailId);
+                    if (od != null)
                     {
-                        Context.OrderDetails.Remove(od);
+                        if (od.Quantity == 1)
+                        {
+                            Context.OrderDetails.Remove(od);
+                            Context.SaveChanges();
+                            return RedirectToAction("CheckOutCart", "Product");
+                        }
+                        od.Quantity -= 1;
+                        Context.OrderDetails.Update(od);
                         Context.SaveChanges();
                         return RedirectToAction("CheckOutCart", "Product");
                     }
-                    od.Quantity -= 1;
-                    Context.OrderDetails.Update(od);
-                    Context.SaveChanges();
-                    return RedirectToAction("CheckOutCart", "Product");
                 }
+                return RedirectToAction("CheckOutCart", "Product");
             }
-            return RedirectToAction("CheckOutCart", "Product");
-
         }
 
         public IActionResult Buy()

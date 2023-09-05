@@ -20,7 +20,6 @@ namespace Shop.Web.Controllers
             ServerSideService = serverSideService;
         }
 
-
         [HttpGet]
         public IActionResult Register()
         {
