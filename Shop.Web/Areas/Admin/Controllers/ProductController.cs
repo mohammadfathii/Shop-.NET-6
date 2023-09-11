@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +16,15 @@ namespace Shop.Web.Areas.Admin.Controllers
     {
         public ShopDBContext Context { get; set; }
         public IServerSideService ServerSideService { get; set; }
+        private INotyfService _toastNotification { get; set; }
         public List<Category> Categories { get; set; }
-        public ProductController(ShopDBContext context,IServerSideService serverSideService)
+        public ProductController(ShopDBContext context,IServerSideService serverSideService,
+            INotyfService notyfService)
         {
             Context = context;
             ServerSideService = serverSideService;
             Categories = Context.Categories.ToList();
+            _toastNotification = notyfService;
         }
         public IActionResult Index()
         {
@@ -73,6 +78,7 @@ namespace Shop.Web.Areas.Admin.Controllers
 
             Context.Products.Add(Product);
             Context.SaveChanges();
+            _toastNotification.Success("Product Created Successfully !");
             return RedirectToAction("Index");
         }
 
@@ -109,8 +115,6 @@ namespace Shop.Web.Areas.Admin.Controllers
             ViewBag.Categories = new SelectList(Context.Categories, "Id", "Name", product.CategoryId);
             if (Context.Products.Any(p => p.Id == product.Id))
             {
-                //if (ModelState.IsValid)
-                //{
                     var currentProduct = Context.Products.FirstOrDefault(p => p.Id == product.Id);
                     if (product.Thumbnail != null && product.Thumbnail.Length > 0)
                     {
@@ -131,10 +135,8 @@ namespace Shop.Web.Areas.Admin.Controllers
                     currentProduct.QuantityInStock = product.QuantityInStock;
                     Context.Products.Update(currentProduct);
                     Context.SaveChanges();
-                    return RedirectToAction("Details", product.Id);
-                //}
-                //return View();
             }
+            _toastNotification.Warning("Product Updated Successfully !");
             return RedirectToAction("Index");
         }
 

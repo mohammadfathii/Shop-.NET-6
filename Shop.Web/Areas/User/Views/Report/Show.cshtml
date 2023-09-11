@@ -1,5 +1,6 @@
 ﻿@model Report
 
+
 <style>
     .other{
         direction: rtl !important;
@@ -16,8 +17,12 @@
     <h1>Report : <span style="color:red">@Model.Title</span></h1>
     <hr/>
     <div>
-        <input type="text" class="editor1" id="editor1" name="message" style="width:100%" /><br />
-        <button onclick="sendMessage()" class="btn btn-primary">ارسال پیام</button>
+        <form asp-area="User" asp-controller="Report" asp-action="Message" method="post">
+            @Html.AntiForgeryToken()
+            <input type="number" name="reportId" value="@Model.Id" hidden />
+            <input type="text" id="editor1" name="body" placeholder="لطفا متن را وارد کنید" style="width:100%"/><br />
+            <button class="btn btn-primary">ارسال پیام</button>
+        </form>
     </div>
     <hr/>
 
@@ -48,18 +53,6 @@
 
 
 @section Scripts{
-
-    <script>
-        function sendMessage(){
-            var msg = document.querySelectorAll("input");
-            console.log(msg[3].value)
-
-        }
-
-
-
-    </script>
-
     <!-- jQuery -->
     <script src="~/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->

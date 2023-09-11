@@ -17,7 +17,7 @@ namespace Shop.Web.Models.ViewModel
         [AllowNull]
         [Range(0,9999999)]
         public int DiscountCount { get; set; } = 0;
-        [AllowNull]
+        [MaybeNull]
         public IFormFile Thumbnail { get; set; }
         [AllowNull]
         public string ThumbnailIMG { get; set; } = string.Empty;

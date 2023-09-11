@@ -246,6 +246,8 @@
     <script src="~/plugins/dist/js/demo.js"></script>
 
     @await RenderSectionAsync("Scripts",required: false);
+    @await Component.InvokeAsync("Notyf")
+
 </body>
 </html>
 

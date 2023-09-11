@@ -38,7 +38,7 @@ namespace Shop.Web.Areas.User.Controllers
                 var order = Context.Orders.FirstOrDefault(o => o.isFinally == false && o.UserId == int.Parse(User.FindFirst("Id").Value));
                 if (order == null)
                 {
-                    var neworder = new Models.Order()
+                    var neworder = new Shop.Web.Models.Order()
                     {
                         UserId = int.Parse(User.FindFirst("Id").Value),
                         isFinally = false,
@@ -47,7 +47,7 @@ namespace Shop.Web.Areas.User.Controllers
                     Context.SaveChanges();
 
 
-                    Context.OrderDetails.Add(new Models.OrderDetail()
+                    Context.OrderDetails.Add(new Shop.Web.Models.OrderDetail()
                     {
                          OrderId = neworder.Id,
                          ProductId = ProductId,
@@ -63,7 +63,7 @@ namespace Shop.Web.Areas.User.Controllers
                     {
                         if (Context.Products.Find(ProductId).QuantityInStock >= 1)
                         {
-                            Context.OrderDetails.Add(new Models.OrderDetail()
+                            Context.OrderDetails.Add(new Shop.Web.Models.OrderDetail()
                             {
                                 OrderId = order.Id,
                                 ProductId = ProductId,

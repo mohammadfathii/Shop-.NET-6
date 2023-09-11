@@ -4,6 +4,8 @@ using Shop.Web.Data;
 using Shop.Web.Data.Services;
 using Shop.Web.Data.Services.Interfaces;
 using Shop.Web.Middlewares;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +38,13 @@ builder.Services.AddAuthentication(option =>
 
 // end
 
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.TopLeft;
+});
+
 var app = builder.Build();
 
 
@@ -54,9 +63,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseAuthMiddleware();
+
+
+app.UseNotyf();
+
 
 app.UseEndpoints(endpoints =>
 {

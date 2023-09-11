@@ -1,0 +1,78 @@
+﻿@model CreateUpdateUserViewModel
+
+<div class="container">
+    <div class=".col-xs-4 .col-md-offset-2">
+        <div class="panel panel-default panel-info Profile">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <form asp-controller="Home" asp-action="EditProfile" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">First Name</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="firstName"
+                                       placeholder="First Name" ng-model="me.firstName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Last Name</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="lastName"
+                                       placeholder="Last Name" ng-model="me.lastName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="email"
+                                       placeholder="Email" ng-model="me.email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Department</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="department"
+                                       placeholder="Department" ng-model="me.email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Title</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="title"
+                                       placeholder="Title" ng-model="me.email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Start Date</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="startDate"
+                                       placeholder="Start Date" ng-model="me.email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Location</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="location"
+                                       placeholder="Location" ng-model="me.email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Phone</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="phone"
+                                       placeholder="xxx-xxx-xxxx" ng-model="me.email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button class="btn btn-primary" ng-click="updateMe()">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>  <!-- end form-horizontal -->
+            </div> <!-- end panel-body -->
+
+        </div> <!-- end panel -->
+
+
+    </div> <!-- end size -->
+</div> <!-- end container-fluid -->

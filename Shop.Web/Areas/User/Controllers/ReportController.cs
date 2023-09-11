@@ -59,31 +59,36 @@ namespace Shop.Web.Areas.User.Controllers
             var reports = ShopDBContext.Reports.Where(r => r.UserId == int.Parse(User.FindFirst("Id").Value) && r.IsFinally == true).Include(c => c.ReportMessages).Include(r => r.User);
             return View(reports);
         }
-
-        public IActionResult Message(ReportMessageViewModel RMVM)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Message(int reportId,string body)
         {
-            var report = ShopDBContext.Reports.FirstOrDefault(r => r.Id == RMVM.ReportId);
+            var report = ShopDBContext.Reports.FirstOrDefault(r => r.Id == reportId && r.UserId == int.Parse(User.FindFirst("Id").Value));
 
             if (report == null)
             {
-                return BadRequest();
-            }else if (!ModelState.IsValid)
+                return RedirectToAction("Index");
+            }
+            else if (body == null || body == "")
             {
-                return BadRequest();
+                return RedirectToAction("Show",new { Id = reportId });
             }
 
-            ShopDBContext.ReportMessages.Add(new ReportMessage()
+            if (report.IsFinally == false)
             {
-                UserId = int.Parse(User.FindFirst("Id").Value),
-                ReportId = RMVM.ReportId,
-                Body = RMVM.Body,
-            });
-            ShopDBContext.SaveChanges();
-
-            return RedirectToAction("Show",new
-            {
-                Id = RMVM.ReportId
-            });
+                ShopDBContext.ReportMessages.Add(new ReportMessage()
+                {
+                    UserId = int.Parse(User.FindFirst("Id").Value),
+                    ReportId = reportId,
+                    Body = body,
+                });
+                ShopDBContext.SaveChanges();
+                return RedirectToAction("Show", new
+                {
+                    Id = reportId
+                });
+            }
+            return RedirectToAction("Index");
         }
     }
 }
