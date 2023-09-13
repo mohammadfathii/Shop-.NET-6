@@ -61,17 +61,13 @@ namespace Shop.Web.Areas.User.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Message(int reportId,string body)
+        public IActionResult Message(int Id,string Body)
         {
-            var report = ShopDBContext.Reports.FirstOrDefault(r => r.Id == reportId && r.UserId == int.Parse(User.FindFirst("Id").Value));
+            var report = ShopDBContext.Reports.FirstOrDefault(r => r.Id == Id && r.UserId == int.Parse(User.FindFirst("Id").Value));
 
             if (report == null)
             {
                 return RedirectToAction("Index");
-            }
-            else if (body == null || body == "")
-            {
-                return RedirectToAction("Show",new { Id = reportId });
             }
 
             if (report.IsFinally == false)
@@ -79,13 +75,13 @@ namespace Shop.Web.Areas.User.Controllers
                 ShopDBContext.ReportMessages.Add(new ReportMessage()
                 {
                     UserId = int.Parse(User.FindFirst("Id").Value),
-                    ReportId = reportId,
-                    Body = body,
+                    ReportId = Id,
+                    Body = Body,
                 });
                 ShopDBContext.SaveChanges();
                 return RedirectToAction("Show", new
                 {
-                    Id = reportId
+                    Id = Id
                 });
             }
             return RedirectToAction("Index");

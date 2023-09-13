@@ -45,6 +45,8 @@ builder.Services.AddNotyf(config =>
     config.Position = NotyfPosition.TopLeft;
 });
 
+
+
 var app = builder.Build();
 
 
