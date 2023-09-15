@@ -1,0 +1,45 @@
+﻿@model Product
+
+<div class="row">
+    <div class="container">
+        <form asp-controller="Product" asp-action="Delete" method="post">
+
+            <img src="~/Uploads/Images/Products/@Model.Thumbnail" width="100%" height="auto" />
+            <br /><br />
+            <div class="form-group">
+                <label asp-for="Id"></label>
+                <input asp-for="Id" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountCount"></label>
+                <input asp-for="DiscountCount" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountPercent"></label>
+                <input asp-for="DiscountPercent" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantityInStock"></label>
+                <input asp-for="QuantityInStock" disabled/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-warning btn-block">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

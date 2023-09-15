@@ -139,5 +139,19 @@ namespace Shop.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Delete(int Id)
+        {
+            var product = Context.Products.FirstOrDefault(p => p.Id == Id);
+            return View(product);
+        }
+        [HttpPost]
+        public IActionResult Delete(Product product)
+        {
+            Context.Products.Remove(product);
+            Context.SaveChanges();
+            _toastNotification.Warning("محصول با موفقیت حذف شد !");
+            return RedirectToAction("Index");
+        }
+
     }
 }
