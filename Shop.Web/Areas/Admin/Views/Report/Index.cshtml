@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Report>
+
+
+<div class="card-body">
+    <h1>تمامی گزارش های باز</h1><br/>
+    <a asp-controller="Report" asp-action="CloseList" class="btn btn-warning btn-block">
+        <i class="nav-icon fa fa-solid fa-bug"></i>
+        <p>رفتن به لیست گزارش های بسته شده</p>
+    </a><br /><br />
+    <hr/>
+    <table id="products" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>شماره گزارش</th>
+                <th>کاربر</th>
+                <th>تعداد چت ها</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var chat in Model)
+            {
+                <tr>
+                    <td>@chat.Id</td>
+                    <td>@chat.User.UserName</td>
+                    <td>@chat.ReportMessages.Count()</td>
+                    <td><div class="btn-group">
+                         <a class="btn btn-primary" asp-action="Show" asp-route-id="@chat.Id">رفتن به گزارش</a>
+                            <a class="btn btn-danger" asp-action="Close" asp-route-id="@chat.Id">بستن گزارش</a>
+                    </div></td>
+                </tr>
+            }
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td>یافت نشد</td>
+                    <td>یافت نشد</td>
+                    <td>یافت نشد</td>
+                    <td>
+                    <div class="btn-group">
+                        <a class="btn btn-primary disabled">رفتن به گزارش</a>
+                        <a class="btn btn-danger disabled">بستن گزارش</a>
+                    </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>شماره گزارش</th>
+                <th>کاربر</th>
+                <th>تعداد چت ها</th>
+                <th>عملیات</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+
+@section Scripts{
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="~/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <!-- SlimScroll -->
+    <script src="~/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src=".~/dist/js/demo.js"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#products").DataTable({
+                "language": {
+                    "paginate": {
+                        "next": "بعدی",
+                        "previous": "قبلی"
+                    }
+                },
+                "info": false,
+            });
+        });
+    </script>
+}

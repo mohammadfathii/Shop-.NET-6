@@ -1,0 +1,55 @@
+﻿@model Report
+
+
+<style>
+    .other{
+        direction: rtl !important;
+        background-color : aqua;
+    }
+    .myself{
+        direction: ltr !important;
+        background-color: orange;
+    }
+</style>
+
+
+
+<div class="container mt-2">
+    <h1>Report : <span style="color:red">@Model.Title</span></h1>
+    <hr/>
+    <div>
+        <form   asp-controller="Report" asp-action="Message" method="post">
+            @Html.AntiForgeryToken()
+            <input asp-for="Id" type="number" value="@Model.Id" hidden />
+            <input name="Body" type="text" placeholder="لطفا متن را وارد کنید" style="width:100%;padding:20px" /><br /><br />
+            <button class="btn btn-primary">ارسال پیام</button>
+        </form>
+    </div>
+    <hr/>
+
+    <div class="column border border-2 p-2" style="width:100%;height:100vh;padding:30px;overflow-y:auto">
+        @foreach (var reportMessage in Model.ReportMessages)
+        {
+            <div class="col-lg-12 p-3 @(reportMessage.UserId != int.Parse(User.FindFirst("Id").Value) ? "other" : "myself")">
+                <b><span style="color:@(reportMessage.User.IsAdmin == true ? "red" : "blue")">@(reportMessage.User.IsAdmin == true ? "Admin" : "User")</span>&nbsp; @reportMessage.User.UserName</b>
+                <div>
+                    <p>
+                        @Html.Raw(reportMessage.Body)
+                    </p>
+                </div>
+            </div>
+        }
+        @*<div class="col-lg-12 myself p-3">
+            <b><span style="color:blue">User</span> Mohammad Fathi</b>
+            <div>
+                <p>
+                    hello world
+                </p>
+            </div>
+        </div>*@
+    </div>
+
+</div>
+
+
+
