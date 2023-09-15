@@ -5,7 +5,7 @@ namespace Shop.Web.Controllers
     public class ErrorController : Controller
     {
         [HttpGet("/Error/{statuscode}")]
-        public IActionResult Index(int statuscode)
+        public IActionResult Error(int statuscode)
         {
             if (statuscode == 404)
             {

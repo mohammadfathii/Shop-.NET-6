@@ -3,6 +3,7 @@ using Shop.Web.Areas.User.Models.ViewModel;
 using Shop.Web.Data;
 using Shop.Web.Data.Services;
 using Shop.Web.Data.Services.Interfaces;
+using Shop.Web.Models;
 
 namespace Shop.Web.Areas.User.Controllers
 {
@@ -11,10 +12,12 @@ namespace Shop.Web.Areas.User.Controllers
     {
         public ShopDBContext Context { get; set; }
         public IServerSideService ServerSideService { get; set; }
+        public CreateUpdateUserViewModel TheUser { get; set; }
         public HomeController(ShopDBContext context,IServerSideService serverSideService)
         {
             Context = context;
             ServerSideService = serverSideService;
+            
         }
         public IActionResult Index()
         {
@@ -30,11 +33,10 @@ namespace Shop.Web.Areas.User.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditProfile()
+        public async Task<IActionResult> EditProfile()
         {
             var user = Context.Users.FirstOrDefault(u => u.Id == int.Parse(User.FindFirst("Id").Value));
-
-            return View(new CreateUpdateUserViewModel()
+            TheUser = new CreateUpdateUserViewModel()
             {
                 Id = user.Id,
                 FullName = user.FullName,
@@ -43,31 +45,29 @@ namespace Shop.Web.Areas.User.Controllers
                 Address2 = user.Address2,
                 PhoneNumber = user.PhoneNumber,
                 Avatar = user.Avatar,
-            });
+            };
+
+            return View(TheUser);
         }
         [HttpPost]
-        public async Task<IActionResult> EditProfileAsync(CreateUpdateUserViewModel user)
+        public async Task<IActionResult> EditProfile(CreateUpdateUserViewModel user)
         {
             var U = Context.Users.FirstOrDefault(u => u.Id == int.Parse(User.FindFirst("Id").Value));
+
+            TheUser = new CreateUpdateUserViewModel()
+            {
+                Id = U.Id,
+                FullName = U.FullName,
+                City = U.City,
+                Address1 = U.Address,
+                Address2 = U.Address2,
+                PhoneNumber = U.PhoneNumber,
+                Avatar = U.Avatar,
+            };
 
             if (user.Id != U.Id)
             {
                 return NotFound();
-            }
-
-            else if (!ModelState.IsValid)
-            {
-                return View(user);
-            }
-
-            if (user.Image != null && user.Image.Length > 0)
-            {
-                ServerSideService.DeleteFile(@"Images\Avatars\" + U.Avatar);
-                var image = await ServerSideService.UploadFile(user.Image, @"Images\Avatars\");
-                U.Avatar = image;
-            }else
-            {
-                U.Avatar = "user";
             }
 
             U.FullName = user.FullName;
@@ -76,10 +76,20 @@ namespace Shop.Web.Areas.User.Controllers
             U.Address2 = user.Address2;
             U.PhoneNumber = user.PhoneNumber;
 
+            if (user.Image != null && user.Image.Length > 0)
+            {
+                ServerSideService.DeleteFile(@"Images\Avatars\" + U.Avatar);
+                var image = await ServerSideService.UploadFile(user.Image, @"Images\Avatars\");
+                U.Avatar = image;
+            }else
+            {
+                U.Avatar = U.Avatar;
+            }
+            Console.WriteLine(U);
             Context.Update(U);
             Context.SaveChanges();
 
-            return View();
+            return View(TheUser);
         }
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordUserViewModel User)
