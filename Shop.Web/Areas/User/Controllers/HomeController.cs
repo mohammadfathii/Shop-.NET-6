@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Shop.Web.Areas.User.Models.ViewModel;
 using Shop.Web.Data;
 using Shop.Web.Data.Services;
@@ -91,10 +92,31 @@ namespace Shop.Web.Areas.User.Controllers
 
             return View(TheUser);
         }
-        [HttpPost]
-        public IActionResult ChangePassword(ChangePasswordUserViewModel User)
+
+        public IActionResult ChangePassword()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordUserViewModel user)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var U = Context.Users.FirstOrDefault(u => u.Id == int.Parse(User.FindFirst("Id").Value));
+
+            if (U == null)
+            {
+                return NotFound();
+            }
+
+            U.Password = user.NewPassword;
+            Context.Users.Update(U);
+            Context.SaveChanges();
+            return RedirectToAction("Profile");
         }
 
     }
