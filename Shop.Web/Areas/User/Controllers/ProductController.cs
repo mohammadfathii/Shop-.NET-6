@@ -168,7 +168,7 @@ namespace Shop.Web.Areas.User.Controllers
     
         public IActionResult Factors ()
         {
-            var userId = User.FindFirst("Id").Value;
+            var userId = User.FindFirst("Id")?.Value;
             var factors = Context.Orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).Where(o => o.isFinally == true && o.UserId == int.Parse(userId)).ToList();
             return View(factors);
         }
